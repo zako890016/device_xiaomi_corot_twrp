@@ -1,13 +1,10 @@
-import /keymint.service.mitee.rc
-import /tee-supplicant.rc
-import /miteelog.rc
+
 
 on init
     setprop sys.usb.configfs 1
     setprop sys.usb.controller "11201000.usb0"
     setprop sys.usb.ffs.aio_compat 1
-    export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw
-    setprop crypto.ready 1
+   
 
 on fs
     install_keyring
@@ -59,14 +56,7 @@ service mtk.plpath.utils.link /system/bin/mtk_plpath_utils
     oneshot
     seclabel u:r:recovery:s0
 
-service vendor.gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-service
-    interface android.hardware.gatekeeper@1.0::IGatekeeper default
-    class hal
-    user root
-    group root
-    disabled
-    seclabel u:r:recovery:s0
-    
+
  service overrideprops /system/bin/overrideprops.sh
     user root
     group root
@@ -74,47 +64,8 @@ service vendor.gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-ser
     oneshot
     seclabel u:r:recovery:s0
     
- service mifs_hal /system/bin/mifs_hal.sh
-    user root
-    group root
-    disabled
-    oneshot
-    seclabel u:r:recovery:s0
-    
-on property:crypto.ready=1
-    start vendor.keymint-mitee
-
-on property:hwservicemanager.ready=true
-    start vendor.keymint-mitee
-    start vendor.gatekeeper-1-0
-
-on property:ro.crypto.state=unsupported
-    stop vendor.keymint-mitee
-    stop vendor.gatekeeper-1-0
-    stop tee-supplicant
-    stop miteelog
-    
-on property:ro.crypto.state=unencrypted
-    stop vendor.keymint-mitee
-    stop vendor.gatekeeper-1-0
-    stop tee-supplicant
-    stop miteelog
-
-on property:twrp.decrypt.done=true
-    stop vendor.keymint-mitee
-    stop vendor.gatekeeper-1-0
-    stop tee-supplicant
-    stop miteelog
-    
-
-on property:crypto.ready=0
-    stop vendor.keymint-mitee
-    stop vendor.gatekeeper-1-0
-    stop tee-supplicant
-    stop miteelog
 
 on boot
     start health-hal-2-1
-    start mifs_hal
     start overrideprops
     setprop sys.usb.config adb
