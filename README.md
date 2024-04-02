@@ -14,9 +14,6 @@ Storage | 256/512/1024 GB
 Battery | 5000 mAh, Li-Polymer
 
 ## Features
-Problems:
-- [X] mifs
-- [X] Vibrator
 
 Works:
 - [X] ADB
