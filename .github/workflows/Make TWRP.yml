@@ -14,7 +14,7 @@ on:
       DEVICE_TREE_URL:
         description: 'DEVICE_TREE_URL'
         required: true
-        default: 'https://github.com/mominqimiang/device_xiaomi_corot_twrp'
+        default: 'https://github.com/YGYoghurt/vendor_xiaomi_corot'
       DEVICE_TREE_BRANCH:
         description: 'DEVICE_TREE_BRANCH'
         required: true
@@ -36,7 +36,7 @@ on:
       MAKEFILE_NAME:
         description: 'MAKEFILE_NAME'
         required: true
-        default: 'twrp_corot'
+        default: 'corot-vendor'
       BUILD_TARGET:
         description: 'BUILD_TARGET'
         required: true
